@@ -1,1 +1,1 @@
-// State Managenent for Weather and favourites 
+// Use state management here? Context API?
