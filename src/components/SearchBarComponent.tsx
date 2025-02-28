@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { View, TextInput, FlatList, TouchableOpacity, Text, ActivityIndicator, StyleSheet } from "react-native";
 
@@ -9,12 +8,13 @@ const SearchBarComponent = ({ onCitySelect }: { onCitySelect: (city: string) => 
   const [query, setQuery] = useState<string>("");
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
 
   const fetchCities = async (text: string) => {
-    if (text.length < 2) return;
+    if (text.length < 2 || text === selectedCity) return; // Prevent fetching if the user selected a city
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}?key=d362dcde564c489daa1182049252602&q=${text}`);
+      const response = await fetch(`${API_URL}?key=${"d362dcde564c489daa1182049252602"}&q=${text}`);
       const data = await response.json();
       setSuggestions(data);
     } catch (error) {
@@ -25,7 +25,15 @@ const SearchBarComponent = ({ onCitySelect }: { onCitySelect: (city: string) => 
 
   const handleSearch = (text: string) => {
     setQuery(text);
+    setSelectedCity(null); // Reset selected city to allow new suggestions
     fetchCities(text);
+  };
+
+  const handleCitySelect = (city: string) => {
+    setQuery(city);
+    setSuggestions([]); // Clear the suggestions list
+    setSelectedCity(city); // Store the selected city
+    onCitySelect(city);
   };
 
   return (
@@ -37,22 +45,20 @@ const SearchBarComponent = ({ onCitySelect }: { onCitySelect: (city: string) => 
         value={query}
       />
       {loading && <ActivityIndicator size="small" color="#0000ff" />}
-      <FlatList
-        data={suggestions}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.suggestionItem}
-            onPress={() => {
-              setQuery(item.name);
-              setSuggestions([]);
-              onCitySelect(item.name);
-            }}
-          >
-            <Text>{item.name}, {item.region}, {item.country}</Text>
-          </TouchableOpacity>
-        )}
-      />
+      {suggestions.length > 0 && (
+        <FlatList
+          data={suggestions}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.suggestionItem}
+              onPress={() => handleCitySelect(item.name)}
+            >
+              <Text>{item.name}, {item.region}, {item.country}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      )}
     </View>
   );
 };
