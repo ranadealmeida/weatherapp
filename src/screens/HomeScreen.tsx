@@ -14,8 +14,6 @@ const HomeScreen = () => {
       setLoading(true);
       const data = await getWeather("Brussels");
   
-      console.log("Fetched Weather Data:", data);
-  
       if (data) {
         setWeatherData(data);
       }
