@@ -39,7 +39,7 @@ const SevenDayWeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
           styles.cityName
         }>{`${weatherData.location.name}, ${weatherData.location.country}`}</Text>
       <View style={styles.weatherInfo}>
-        {getWeatherIcon(weatherData.current.condition.code)}
+        {getWeatherIcon(weatherData.current.condition.code, 60)}
       </View>
       <Text
         style={styles.temperature}>{`${weatherData.current.temp_c}°C`}</Text>
@@ -54,8 +54,8 @@ const SevenDayWeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
       <ScrollView style={styles.forecastContainer}>
         {weatherData.forecast.forecastday.map((day: any) => (
           <View key={day.date} style={styles.forecastItem}>
-            <Text style={styles.forecastDate}>{day.date}</Text>
-            {getWeatherIcon(day.day.condition.code)}
+            <Text style={styles.forecastDate}>{new Date(day.date).toLocaleString('en-US', { weekday: 'short' })}</Text>
+            {getWeatherIcon(day.day.condition.code, 30)}
             <Text style={styles.forecastTemp}>{`${day.day.avgtemp_c}°C`}</Text>
             <Text style={styles.forecastCondition}>
               {day.day.condition.text}
@@ -107,8 +107,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: 10,
+    height: 40,
+    width: '100%',
   },
   forecastDate: {
+    width: 50,
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -120,6 +123,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666',
     marginLeft: 10,
+    width: 120,
+  },
+  icon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
