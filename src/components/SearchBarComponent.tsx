@@ -3,6 +3,7 @@ import {
   View,
   TextInput,
   FlatList,
+  ScrollView,
   TouchableOpacity,
   Text,
   ActivityIndicator,
@@ -48,31 +49,28 @@ const SearchBarComponent = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.suggestionListContainer}>
       <TextInput
         style={styles.searchInput}
         placeholder="Search city..."
         onChangeText={handleSearch}
         value={query}
       />
-      <View style={styles.suggestionListContainer}>
-      {loading && <ActivityIndicator size="small" color="#0000ff" />}
       {suggestions.length > 0 && (
-        <FlatList
-          data={suggestions}
-          keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => (
+        <ScrollView style={styles.suggestionList}>
+          {loading && <ActivityIndicator size="small" color="#0000ff" />}
+          {suggestions.map((item) => (
             <TouchableOpacity
+              key={item.id.toString()}
               style={styles.suggestionItem}
               onPress={() => handleCitySelect(item.name)}>
               <Text>
                 {item.name}, {item.region}, {item.country}
               </Text>
             </TouchableOpacity>
-          )}
-        />
+          ))}
+        </ScrollView>
       )}
-        </View>
     </View>
   );
 };
@@ -87,18 +85,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
-    marginBottom: 10,
   },
   suggestionListContainer: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: '#fff',
+  },
+  suggestionList: {
     position: 'absolute',
     top: 50,
     left: 0,
     right: 0,
-    backgroundColor: '#fff',
     zIndex: 1000,
-    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginHorizontal: 20,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
     borderColor: '#ddd',
-    borderRadius: 8,
+    borderWidth: 1,
   },
   suggestionItem: {
     padding: 10,
