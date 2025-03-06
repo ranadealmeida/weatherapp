@@ -33,7 +33,7 @@ const WeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
           styles.cityName
         }>{`${weatherData.location.name}, ${weatherData.location.country}`}</Text>
       <View style={styles.weatherInfo}>
-        {getWeatherIcon(weatherData.current.condition.code)}
+        {getWeatherIcon(weatherData.current.condition.code, 50)}
       </View>
       <Text
         style={styles.temperature}>{`${weatherData.current.temp_c}°C`}</Text>

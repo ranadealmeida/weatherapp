@@ -48,13 +48,14 @@ const SearchBarComponent = ({
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
         style={styles.searchInput}
         placeholder="Search city..."
         onChangeText={handleSearch}
         value={query}
       />
+      <View style={styles.suggestionListContainer}>
       {loading && <ActivityIndicator size="small" color="#0000ff" />}
       {suggestions.length > 0 && (
         <FlatList
@@ -71,11 +72,15 @@ const SearchBarComponent = ({
           )}
         />
       )}
+        </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    position: 'relative',
+  },
   searchInput: {
     height: 40,
     borderColor: '#ccc',
@@ -83,6 +88,17 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 10,
     marginBottom: 10,
+  },
+  suggestionListContainer: {
+    position: 'absolute',
+    top: 50,
+    left: 0,
+    right: 0,
+    backgroundColor: '#fff',
+    zIndex: 1000,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
   },
   suggestionItem: {
     padding: 10,
