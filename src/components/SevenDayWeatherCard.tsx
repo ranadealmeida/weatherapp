@@ -49,17 +49,18 @@ const SevenDayWeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
         {getWeatherIcon(weatherData.current.condition.code, 60)}
       </View>
       <Text
-        style={styles.temperature}>{`${weatherData.current.temp_c}°C`}</Text>
-      <Text style={styles.condition}>{weatherData.current.condition.text}</Text>
+        style={styles.temperature}>{`${Math.round(weatherData.current.temp_c)}°C`}</Text>
+        <View style={styles.conditionContainer}>
+          <Text style={styles.condition}> {`H: ${Math.round(weatherData.forecast.forecastday[0].day.maxtemp_c)}°C`}</Text>
+          <Text style={styles.condition}>{`   |   L: ${Math.round(weatherData.forecast.forecastday[0].day.mintemp_c)}°C`}</Text>
+        </View>
       <ScrollView style={styles.forecastContainer}>
         {weatherData.forecast.forecastday.map((day: any) => (
           <View key={day.date} style={styles.forecastItem}>
             <Text style={styles.forecastDate}>{new Date(day.date).toLocaleString('en-US', { weekday: 'short' })}</Text>
             {getWeatherIcon(day.day.condition.code, 30)}
-            <Text style={styles.forecastTemp}>{`${day.day.avgtemp_c}°C`}</Text>
-            <Text style={styles.forecastCondition}>
-              {day.day.condition.text}
-            </Text>
+            <Text style={styles.forecastTemp}>{`H: ${Math.round(weatherData.forecast.forecastday[0].day.maxtemp_c)}°C`}</Text>
+            <Text style={styles.forecastTemp}>{`L: ${Math.round(weatherData.forecast.forecastday[0].day.mintemp_c)}°C`}</Text>
           </View>
         ))}
       </ScrollView>
@@ -70,6 +71,7 @@ const SevenDayWeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
 const styles = StyleSheet.create({
   forecastContainer: {
     marginTop: 20,
+    marginHorizontal: 20,
   },
   card: {
     backgroundColor: '#FFFFFF',
@@ -98,6 +100,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
+  conditionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginTop: 10,
+  },
   temperature: {
     fontSize: 36,
     fontWeight: 'bold',
@@ -124,12 +132,6 @@ const styles = StyleSheet.create({
   forecastTemp: {
     fontSize: 16,
     marginLeft: 10,
-  },
-  forecastCondition: {
-    fontSize: 16,
-    color: '#666',
-    marginLeft: 10,
-    width: 120,
   },
   icon: {
     flexDirection: 'row',
