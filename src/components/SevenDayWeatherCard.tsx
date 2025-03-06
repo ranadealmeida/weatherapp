@@ -34,6 +34,13 @@ const SevenDayWeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
 
   return (
     <View style={styles.card}>
+      <TouchableOpacity style={styles.favIcon} onPress={handleToggleFavorite}>
+        <Icon
+          name={isFavorited ? 'heart' : 'heart-o'}
+          size={30}
+          color={isFavorited ? 'red' : 'black'}
+        />
+      </TouchableOpacity>
       <Text
         style={
           styles.cityName
@@ -44,13 +51,6 @@ const SevenDayWeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
       <Text
         style={styles.temperature}>{`${weatherData.current.temp_c}°C`}</Text>
       <Text style={styles.condition}>{weatherData.current.condition.text}</Text>
-      <TouchableOpacity onPress={handleToggleFavorite}>
-        <Icon
-          name={isFavorited ? 'heart' : 'heart-o'}
-          size={30}
-          color={isFavorited ? 'red' : 'black'}
-        />
-      </TouchableOpacity>
       <ScrollView style={styles.forecastContainer}>
         {weatherData.forecast.forecastday.map((day: any) => (
           <View key={day.date} style={styles.forecastItem}>
@@ -83,7 +83,13 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginBottom: 20,
   },
+  favIcon: {
+    position: 'absolute',
+    right: 20,
+    top: 20,
+  },
   cityName: {
+    paddingTop: 40,
     fontSize: 24,
     fontWeight: 'bold',
   },
