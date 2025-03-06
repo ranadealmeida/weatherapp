@@ -8,6 +8,7 @@ import React, {
 import {getWeather, getSevenDaysWeather} from '../api/getWeather';
 import {WeatherData} from '../types/weather';
 import {WeatherContextType} from '../types/weather-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WeatherContext = createContext<WeatherContextType | undefined>(undefined);
 
@@ -26,6 +27,38 @@ export const WeatherProvider = ({children}: {children: ReactNode}) => {
 
     fetchWeather();
   }, [selectedCity]);
+
+  useEffect(() => {
+    const loadFavoriteCities = async () => {
+      try {
+        const storedFavoriteCities = await AsyncStorage.getItem(
+          'favoriteCities',
+        );
+        if (storedFavoriteCities) {
+          setFavoriteCities(JSON.parse(storedFavoriteCities));
+        }
+      } catch (error) {
+        console.error('Failed to load favorite cities:', error);
+      }
+    };
+
+    loadFavoriteCities();
+  }, []);
+
+  useEffect(() => {
+    const saveFavoriteCities = async () => {
+      try {
+        await AsyncStorage.setItem(
+          'favoriteCities',
+          JSON.stringify(favoriteCities),
+        );
+      } catch (error) {
+        console.error('Failed to save favorite cities:', error);
+      }
+    };
+
+    saveFavoriteCities();
+  }, [favoriteCities]);
 
   const addFavoriteCity = (city: string) => {
     setFavoriteCities([...favoriteCities, city]);
