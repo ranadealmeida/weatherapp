@@ -1,5 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useWeather} from '../context/WeatherContext';
 import {getWeatherIcon} from '../utils/weatherIcons';
@@ -45,25 +51,26 @@ const SevenDayWeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
           color={isFavorited ? 'red' : 'black'}
         />
       </TouchableOpacity>
-      <FlatList
-        data={weatherData.forecast.forecastday}
-        keyExtractor={item => item.date}
-        renderItem={({item}) => (
-          <View style={styles.forecastItem}>
-            <Text style={styles.forecastDate}>{new Date(item.date).toLocaleString('en-US', { weekday: 'short' })}</Text>
-            <View style={styles.icon}>{getWeatherIcon(item.day.condition.code, 30)}</View>
-            <Text style={styles.forecastTemp}>{`${item.day.avgtemp_c}°C`}</Text>
+      <ScrollView style={styles.forecastContainer}>
+        {weatherData.forecast.forecastday.map((day: any) => (
+          <View key={day.date} style={styles.forecastItem}>
+            <Text style={styles.forecastDate}>{new Date(day.date).toLocaleString('en-US', { weekday: 'short' })}</Text>
+            {getWeatherIcon(day.day.condition.code, 30)}
+            <Text style={styles.forecastTemp}>{`${day.day.avgtemp_c}°C`}</Text>
             <Text style={styles.forecastCondition}>
-              {item.day.condition.text}
+              {day.day.condition.text}
             </Text>
           </View>
-        )}
-      />
+        ))}
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  forecastContainer: {
+    marginTop: 20,
+  },
   card: {
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
