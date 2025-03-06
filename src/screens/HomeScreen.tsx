@@ -19,22 +19,20 @@ const HomeScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <SafeAreaView>
-        <Text style={styles.title}>
-          {selectedCity ? `Weather in ${selectedCity}` : 'Search for a city'}
-        </Text>
-        <SearchBarComponent onCitySelect={setSelectedCity} />
-        {weatherData ? (
-          <SevenDayWeatherCard weatherData={weatherData} />
-        ) : (
-          <Text style={styles.errorText}>No weather data available.</Text>
-        )}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Favourites')}>
-          <Text style={styles.buttonText}>Go to Favourites</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
+      <Text style={styles.title}>
+        {selectedCity ? `Weather in ${selectedCity}` : 'Search for a city'}
+      </Text>
+      <SearchBarComponent onCitySelect={setSelectedCity} />
+      {weatherData ? (
+        <SevenDayWeatherCard weatherData={weatherData} />
+      ) : (
+        <Text style={styles.errorText}>No weather data available.</Text>
+      )}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Favourites')}>
+        <Text style={styles.buttonText}>Go to Favourites</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
