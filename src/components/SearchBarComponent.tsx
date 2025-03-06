@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 import Config from 'react-native-config';
 import {useWeather} from '../context/WeatherContext';
+import {getCitySuggestions} from '../api/getCitySuggestions'; // Import the fetchCities function
 
 const API_KEY = Config.API_KEY;
-const API_URL = 'https://api.weatherapi.com/v1/search.json';
 
 const SearchBarComponent = ({
   onCitySelect,
@@ -24,22 +24,21 @@ const SearchBarComponent = ({
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchCities = async (text: string) => {
-    if (text.length < 2) return;
+  const handleSearch = async (text: string) => {
+    setQuery(text);
+    if (text.length < 3) {
+      setSuggestions([]);
+      return;
+    }
+
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}?key=${API_KEY}&q=${text}`);
-      const data = await response.json();
-      setSuggestions(data);
+      const cities = await getCitySuggestions(text, API_KEY);
+      setSuggestions(cities);
     } catch (error) {
       console.error('Error fetching city suggestions:', error);
     }
     setLoading(false);
-  };
-
-  const handleSearch = (text: string) => {
-    setQuery(text);
-    fetchCities(text);
   };
 
   const handleCitySelect = (city: string) => {
