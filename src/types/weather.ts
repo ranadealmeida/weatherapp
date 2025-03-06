@@ -1,13 +1,25 @@
 export interface WeatherData {
-    location: {
-      name: string;
-      country: string;
+  location: {
+    name: string;
+    country: string;
+  };
+  current: {
+    temp_c: number;
+    condition: {
+      text: string;
+      code: number; 
     };
-    current: {
-      temp_c: number; 
-      condition: {
-        text: string;
+  };
+  forecast: {
+    forecastday: {
+      date: string;
+      day: {
+        avgtemp_c: number;
+        condition: {
+          text: string;
+          code: number; 
+        };
       };
-    };
-  }
-  
+    }[];
+  };
+}

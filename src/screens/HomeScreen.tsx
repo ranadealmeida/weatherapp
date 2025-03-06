@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import SearchBarComponent from '../components/SearchBarComponent';
-import WeatherCard from '../components/WeatherCard';
+import SevenDayWeatherCard from '../components/SevenDayWeatherCard';
 import {useWeather} from '../context/WeatherContext';
 
 const HomeScreen = () => {
@@ -16,7 +16,7 @@ const HomeScreen = () => {
       </Text>
       <SearchBarComponent onCitySelect={setSelectedCity} />
       {weatherData ? (
-        <WeatherCard weatherData={weatherData} />
+        <SevenDayWeatherCard weatherData={weatherData} />
       ) : (
         <Text style={styles.errorText}>No weather data available.</Text>
       )}

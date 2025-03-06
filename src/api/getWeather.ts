@@ -9,7 +9,7 @@ export const getWeather = async (city: string) => {
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching forecast data:', error);
         return null;
     }
 };

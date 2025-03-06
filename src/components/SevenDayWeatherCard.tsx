@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useWeather} from '../context/WeatherContext';
 import {getWeatherIcon} from '../utils/weatherIcons';
 
-const WeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
+const SevenDayWeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
   const {favoriteCities, addFavoriteCity, removeFavoriteCity} = useWeather();
   const [isFavorited, setIsFavorited] = useState(false);
 
@@ -45,6 +45,20 @@ const WeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
           color={isFavorited ? 'red' : 'black'}
         />
       </TouchableOpacity>
+      <FlatList
+        data={weatherData.forecast.forecastday}
+        keyExtractor={item => item.date}
+        renderItem={({item}) => (
+          <View style={styles.forecastItem}>
+            <Text style={styles.forecastDate}>{item.date}</Text>
+            {getWeatherIcon(item.day.condition.code)}
+            <Text style={styles.forecastTemp}>{`${item.day.avgtemp_c}°C`}</Text>
+            <Text style={styles.forecastCondition}>
+              {item.day.condition.text}
+            </Text>
+          </View>
+        )}
+      />
     </View>
   );
 };
@@ -81,6 +95,25 @@ const styles = StyleSheet.create({
     color: '#666',
     marginTop: 10,
   },
+  forecastItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  forecastDate: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  forecastTemp: {
+    fontSize: 16,
+    marginLeft: 10,
+  },
+  forecastCondition: {
+    fontSize: 16,
+    color: '#666',
+    marginLeft: 10,
+  },
 });
 
-export default WeatherCard;
+export default SevenDayWeatherCard;
