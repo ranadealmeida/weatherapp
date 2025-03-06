@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useWeather} from '../context/WeatherContext';
+import {getWeatherIcon} from '../utils/weatherIcons';
 
 const WeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
   const {favoriteCities, addFavoriteCity, removeFavoriteCity} = useWeather();
@@ -26,10 +27,13 @@ const WeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
   };
 
   return (
-    <View>
-      <Text>{`${weatherData.location.name}, ${weatherData.location.country}`}</Text>
-      <Text>{`${weatherData.current.temp_c}°C`}</Text>
-      <Text>{weatherData.current.condition.text}</Text>
+    <View style={styles.card}>
+      <Text style={styles.cityName}>{`${weatherData.location.name}, ${weatherData.location.country}`}</Text>
+      <View style={styles.weatherInfo}>
+      {getWeatherIcon(weatherData.current.condition.code)}
+      </View>
+      <Text style={styles.temperature}>{`${weatherData.current.temp_c}°C`}</Text>
+      <Text style={styles.condition}>{weatherData.current.condition.text}</Text>
       <TouchableOpacity onPress={handleToggleFavorite}>
         <Icon
           name={isFavorited ? 'heart' : 'heart-o'}
@@ -40,5 +44,39 @@ const WeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+    marginBottom: 20,
+  },
+  cityName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  weatherInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  temperature: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  condition: {
+    fontSize: 18,
+    color: '#666',
+    marginTop: 10,
+  },
+});
 
 export default WeatherCard;
