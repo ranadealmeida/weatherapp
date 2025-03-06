@@ -29,6 +29,35 @@ export const WeatherProvider = ({children}: {children: ReactNode}) => {
   }, [selectedCity]);
 
   useEffect(() => {
+    const loadLastSearchedCity = async () => {
+      try {
+        const storedCity = await AsyncStorage.getItem('lastSearchedCity');
+        if (storedCity) {
+          setSelectedCity(storedCity);
+        }
+      } catch (error) {
+        console.error('Failed to load last searched city:', error);
+      }
+    };
+
+    loadLastSearchedCity();
+  }, []);
+
+  useEffect(() => {
+    const saveLastSearchedCity = async () => {
+      try {
+        if (selectedCity) {
+          await AsyncStorage.setItem('lastSearchedCity', selectedCity);
+        }
+      } catch (error) {
+        console.error('Failed to save last searched city:', error);
+      }
+    };
+
+    saveLastSearchedCity();
+  }, [selectedCity]);
+
+  useEffect(() => {
     const loadFavoriteCities = async () => {
       try {
         const storedFavoriteCities = await AsyncStorage.getItem(

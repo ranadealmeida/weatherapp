@@ -1,6 +1,13 @@
 import React from 'react';
-import {ScrollView, Text, StyleSheet, Button, View,  Touchable,
-  TouchableOpacity } from 'react-native';
+import {
+  ScrollView,
+  Text,
+  StyleSheet,
+  Button,
+  View,
+  Touchable,
+  TouchableOpacity,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import SearchBarComponent from '../components/SearchBarComponent';
 import SevenDayWeatherCard from '../components/SevenDayWeatherCard';
@@ -15,15 +22,15 @@ const HomeScreen = () => {
     <ScrollView>
       <SearchBarComponent onCitySelect={setSelectedCity} />
       <ScrollView contentContainerStyle={styles.container}>
-          <Text style={styles.title}>
-            {selectedCity ? `Weather in ${selectedCity}` : 'Search for a city'}
-          </Text>
-          
-          {weatherData ? (
-            <SevenDayWeatherCard weatherData={weatherData} />
-          ) : (
-            <Text style={styles.errorText}>No weather data available.</Text>
-          )}
+        <Text style={styles.title}>
+          {selectedCity ? `Weather in ${selectedCity}` : 'Search for a city'}
+        </Text>
+
+        {weatherData ? (
+          <SevenDayWeatherCard weatherData={weatherData} />
+        ) : (
+          <Text style={styles.errorText}>No weather data available.</Text>
+        )}
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate('Favourites')}>
@@ -35,7 +42,12 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {flexGrow: 1, paddingHorizontal: 20, paddingVertical: 10, backgroundColor: '#fff'},
+  container: {
+    flexGrow: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: '#fff',
+  },
   title: {fontSize: 18, fontWeight: 'bold', marginBottom: 10},
   errorText: {color: 'red', marginTop: 10},
   button: {
