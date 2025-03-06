@@ -25,7 +25,11 @@ const SearchBarComponent = ({
   const [loading, setLoading] = useState(false);
 
   const fetchCities = async (text: string) => {
-    if (text.length < 2) return;
+    if (text.length < 3){ 
+      setSuggestions([]);
+      return
+    };
+    
     setLoading(true);
     try {
       const response = await fetch(`${API_URL}?key=${API_KEY}&q=${text}`);
