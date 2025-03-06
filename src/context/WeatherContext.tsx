@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   useEffect,
 } from 'react';
-import {getWeather} from '../api/getWeather';
+import {getWeather, getSevenDaysWeather} from '../api/getWeather';
 import {WeatherData} from '../types/weather';
 import {WeatherContextType} from '../types/weather-context';
 
@@ -20,7 +20,7 @@ export const WeatherProvider = ({children}: {children: ReactNode}) => {
     if (!selectedCity) return;
 
     const fetchWeather = async () => {
-      const data = await getWeather(selectedCity);
+      const data = await getSevenDaysWeather(selectedCity);
       setWeatherData(data);
     };
 
