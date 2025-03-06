@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, Text, ScrollView, StyleSheet, SafeAreaView} from 'react-native';
 import {useWeather} from '../context/WeatherContext';
 import WeatherCard from '../components/WeatherCard';
 import {getWeather} from '../api/getWeather';
@@ -22,11 +22,16 @@ const FavouritesScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Favourite Cities</Text>
-      <FlatList
-        data={weatherDataList}
-        keyExtractor={item => item.location.name}
-        renderItem={({item}) => <WeatherCard weatherData={item} />}
-      />
+      <SafeAreaView>
+        <ScrollView>
+          {weatherDataList.map(weatherData => (
+            <WeatherCard
+              key={weatherData.location.name}
+              weatherData={weatherData}
+            />
+          ))}
+        </ScrollView>
+      </SafeAreaView>
     </View>
   );
 };
