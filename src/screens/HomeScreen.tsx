@@ -1,39 +1,58 @@
 import React from 'react';
-import {ScrollView, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import SearchBarComponent from '../components/SearchBarComponent';
 import SevenDayWeatherCard from '../components/SevenDayWeatherCard';
 import {useWeather} from '../context/WeatherContext';
+import {getWeatherBackground} from '../utils/weatherBackground';
 
 const HomeScreen = () => {
   const {selectedCity, weatherData, setSelectedCity} = useWeather();
   const navigation = useNavigation();
 
   return (
-    <ScrollView>
-      <SearchBarComponent onCitySelect={setSelectedCity} />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Favourites')}>
-        <Text style={styles.buttonText}>Go to Favourites</Text>
-      </TouchableOpacity>
-      <ScrollView contentContainerStyle={styles.container}>
-        {weatherData ? (
-          <SevenDayWeatherCard weatherData={weatherData} />
-        ) : (
-          <Text style={styles.errorText}>No weather data available.</Text>
-        )}
+    <ImageBackground
+      source={
+        weatherData
+          ? getWeatherBackground(weatherData.current.condition.code)
+          : require('../assets/default-background.jpg')
+      }
+      style={styles.backgroundImage}>
+      <ScrollView>
+        <SearchBarComponent onCitySelect={setSelectedCity} />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Favourites')}>
+          <Text style={styles.buttonText}>Go to Favourites</Text>
+        </TouchableOpacity>
+        <ScrollView contentContainerStyle={styles.container}>
+          {weatherData ? (
+            <SevenDayWeatherCard weatherData={weatherData} />
+          ) : (
+            <Text style={styles.errorText}>No weather data available.</Text>
+          )}
+        </ScrollView>
       </ScrollView>
-    </ScrollView>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
   container: {
     flexGrow: 1,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
   },
   title: {
     fontSize: 18,

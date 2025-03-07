@@ -48,19 +48,33 @@ const SevenDayWeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
       <View style={styles.weatherInfo}>
         {getWeatherIcon(weatherData.current.condition.code, 60)}
       </View>
-      <Text
-        style={styles.temperature}>{`${Math.round(weatherData.current.temp_c)}°C`}</Text>
-        <View style={styles.conditionContainer}>
-          <Text style={styles.condition}> {`H: ${Math.round(weatherData.forecast.forecastday[0].day.maxtemp_c)}°C`}</Text>
-          <Text style={styles.condition}>{`   |   L: ${Math.round(weatherData.forecast.forecastday[0].day.mintemp_c)}°C`}</Text>
-        </View>
+      <Text style={styles.temperature}>{`${Math.round(
+        weatherData.current.temp_c,
+      )}°C`}</Text>
+      <View style={styles.conditionContainer}>
+        <Text style={styles.condition}>
+          {' '}
+          {`H: ${Math.round(
+            weatherData.forecast.forecastday[0].day.maxtemp_c,
+          )}°C`}
+        </Text>
+        <Text style={styles.condition}>{`   |   L: ${Math.round(
+          weatherData.forecast.forecastday[0].day.mintemp_c,
+        )}°C`}</Text>
+      </View>
       <ScrollView style={styles.forecastContainer}>
         {weatherData.forecast.forecastday.map((day: any) => (
           <View key={day.date} style={styles.forecastItem}>
-            <Text style={styles.forecastDate}>{new Date(day.date).toLocaleString('en-US', { weekday: 'short' })}</Text>
+            <Text style={styles.forecastDate}>
+              {new Date(day.date).toLocaleString('en-US', {weekday: 'short'})}
+            </Text>
             {getWeatherIcon(day.day.condition.code, 30)}
-            <Text style={styles.forecastTemp}>{`H: ${Math.round(weatherData.forecast.forecastday[0].day.maxtemp_c)}°C`}</Text>
-            <Text style={styles.forecastTemp}>{`L: ${Math.round(weatherData.forecast.forecastday[0].day.mintemp_c)}°C`}</Text>
+            <Text style={styles.forecastTemp}>{`H: ${Math.round(
+              weatherData.forecast.forecastday[0].day.maxtemp_c,
+            )}°C`}</Text>
+            <Text style={styles.forecastTemp}>{`L: ${Math.round(
+              weatherData.forecast.forecastday[0].day.mintemp_c,
+            )}°C`}</Text>
           </View>
         ))}
       </ScrollView>
@@ -74,7 +88,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
     borderRadius: 10,
     padding: 20,
     alignItems: 'center',
@@ -94,6 +108,7 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     fontSize: 24,
     fontWeight: 'bold',
+    justifyContent: 'center',
   },
   weatherInfo: {
     flexDirection: 'row',
