@@ -4,7 +4,7 @@ export const getWeatherBackground = (conditionCode: any) => {
       return require('../assets/sunny.jpg');
     case 1003: // Partly cloudy
       return require('../assets/partly-cloudy.jpg');
-    case 1006: // Cloudy
+    case 1006: // Cloudygit 
     case 1009: // Overcast
       return require('../assets/cloudy.jpg');
     case 1030: // Mist
