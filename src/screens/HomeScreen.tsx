@@ -1,18 +1,9 @@
 import React from 'react';
-import {
-  ScrollView,
-  Text,
-  StyleSheet,
-  Button,
-  View,
-  Touchable,
-  TouchableOpacity,
-} from 'react-native';
+import {ScrollView, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import SearchBarComponent from '../components/SearchBarComponent';
 import SevenDayWeatherCard from '../components/SevenDayWeatherCard';
 import {useWeather} from '../context/WeatherContext';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 const HomeScreen = () => {
   const {selectedCity, weatherData, setSelectedCity} = useWeather();
@@ -21,21 +12,17 @@ const HomeScreen = () => {
   return (
     <ScrollView>
       <SearchBarComponent onCitySelect={setSelectedCity} />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Favourites')}>
+        <Text style={styles.buttonText}>Go to Favourites</Text>
+      </TouchableOpacity>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>
-          {selectedCity ? `Weather in ${selectedCity}` : 'Search for a city'}
-        </Text>
-
         {weatherData ? (
           <SevenDayWeatherCard weatherData={weatherData} />
         ) : (
           <Text style={styles.errorText}>No weather data available.</Text>
         )}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Favourites')}>
-          <Text style={styles.buttonText}>Go to Favourites</Text>
-        </TouchableOpacity>
       </ScrollView>
     </ScrollView>
   );
@@ -48,7 +35,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: '#fff',
   },
-  title: {fontSize: 18, fontWeight: 'bold', marginBottom: 10},
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
   errorText: {color: 'red', marginTop: 10},
   button: {
     backgroundColor: '#fff',
@@ -56,7 +47,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 5,
     alignItems: 'center',
-    marginTop: 20,
   },
   buttonText: {
     color: '#007AFF',
