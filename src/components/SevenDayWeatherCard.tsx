@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,11 +7,11 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useWeather} from '../context/WeatherContext';
-import {getWeatherIcon} from '../utils/weatherIcons';
+import { useWeather } from '../context/WeatherContext';
+import { getWeatherIcon } from '../utils/weatherIcons';
 
-const SevenDayWeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
-  const {favoriteCities, addFavoriteCity, removeFavoriteCity} = useWeather();
+const SevenDayWeatherCard: React.FC<{ weatherData: any }> = ({ weatherData }) => {
+  const { favoriteCities, addFavoriteCity, removeFavoriteCity } = useWeather();
   const [isFavorited, setIsFavorited] = useState(false);
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const SevenDayWeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
         {weatherData.forecast.forecastday.map((day: any) => (
           <View key={day.date} style={styles.forecastItem}>
             <Text style={styles.forecastDate}>
-              {new Date(day.date).toLocaleString('en-US', {weekday: 'short'})}
+              {new Date(day.date).toLocaleString('en-US', { weekday: 'short' })}
             </Text>
             {getWeatherIcon(day.day.condition.code, 30)}
             <Text style={styles.forecastTemp}>{`H: ${Math.round(
@@ -88,16 +88,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   card: {
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
-    borderRadius: 10,
+    borderRadius: 20,
     padding: 20,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
     marginBottom: 20,
+    borderColor: 'rgba(240, 240, 240, 0.8)',
+    borderWidth: 1,
   },
   favIcon: {
     position: 'absolute',
