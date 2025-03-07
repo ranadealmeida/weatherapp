@@ -23,7 +23,7 @@ export const getWeatherBackground = (conditionCode: any) => {
     case 1240: // Light rain shower
     case 1243: // Moderate or heavy rain shower
     case 1246: // Torrential rain shower
-      return require('../assets/rainy.jpg');
+      return require('../assets/rain.jpg');
     case 1066: // Patchy snow possible
     case 1114: // Blowing snow
     case 1117: // Blizzard
@@ -46,7 +46,7 @@ export const getWeatherBackground = (conditionCode: any) => {
     case 1207: // Moderate or heavy sleet
     case 1249: // Light sleet showers
     case 1252: // Moderate or heavy sleet showers
-      return require('../assets/sleet.jpg');
+      return require('../assets/snow.jpg');
     case 1087: // Thundery outbreaks possible
     case 1273: // Patchy light rain with thunder
     case 1276: // Moderate or heavy rain with thunder
@@ -56,7 +56,7 @@ export const getWeatherBackground = (conditionCode: any) => {
     case 1237: // Ice pellets
     case 1261: // Light showers of ice pellets
     case 1264: // Moderate or heavy showers of ice pellets
-      return require('../assets/hail.jpg');
+      return require('../assets/rain.jpg');
     default:
       return require('../assets/default-background.jpg');
   }
