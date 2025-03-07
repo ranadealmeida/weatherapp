@@ -59,7 +59,7 @@ const SearchBarComponent = ({
       {suggestions.length > 0 && (
         <ScrollView style={styles.suggestionList}>
           {loading && <ActivityIndicator size="small" color="#0000ff" />}
-          {suggestions.map((item) => (
+          {suggestions.map(item => (
             <TouchableOpacity
               key={item.id.toString()}
               style={styles.suggestionItem}
@@ -78,6 +78,7 @@ const SearchBarComponent = ({
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
   },
   searchInput: {
     height: 40,
@@ -89,7 +90,8 @@ const styles = StyleSheet.create({
   suggestionListContainer: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
   },
   suggestionList: {
     position: 'absolute',
