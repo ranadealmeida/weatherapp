@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useWeather} from '../context/WeatherContext';
-import {getWeatherIcon} from '../utils/weatherIcons';
+import { useWeather } from '../context/WeatherContext';
+import { getWeatherIcon } from '../utils/weatherIcons';
 
-const WeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
-  const {favoriteCities, addFavoriteCity, removeFavoriteCity} = useWeather();
+const WeatherCard: React.FC<{ weatherData: any }> = ({ weatherData }) => {
+  const { favoriteCities, addFavoriteCity, removeFavoriteCity } = useWeather();
   const [isFavorited, setIsFavorited] = useState(false);
 
   useEffect(() => {
@@ -28,8 +28,8 @@ const WeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
 
   return (
     <View style={styles.card}>
-        <TouchableOpacity style={styles.favIcon}onPress={handleToggleFavorite}>
-        <Icon
+      <TouchableOpacity style={styles.favIcon} onPress={handleToggleFavorite}>
+        <Icon style={styles.heartIcon}
           name={isFavorited ? 'heart' : 'heart-o'}
           size={30}
           color={isFavorited ? 'red' : 'black'}
@@ -51,12 +51,12 @@ const WeatherCard: React.FC<{weatherData: any}> = ({weatherData}) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
     borderRadius: 10,
     padding: 20,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,

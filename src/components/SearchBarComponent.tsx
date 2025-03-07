@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   TextInput,
@@ -10,8 +10,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import Config from 'react-native-config';
-import {useWeather} from '../context/WeatherContext';
-import {getCitySuggestions} from '../api/getCitySuggestions'; // Import the fetchCities function
+import { useWeather } from '../context/WeatherContext';
+import { getCitySuggestions } from '../api/getCitySuggestions'; // Import the fetchCities function
 
 const API_KEY = Config.API_KEY;
 
@@ -20,7 +20,7 @@ const SearchBarComponent = ({
 }: {
   onCitySelect: (city: string) => void;
 }) => {
-  const {setSelectedCity} = useWeather();
+  const { setSelectedCity } = useWeather();
   const [query, setQuery] = useState<string>('');
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -78,11 +78,10 @@ const SearchBarComponent = ({
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
   },
   searchInput: {
     height: 40,
-    borderColor: '#ccc',
+    borderColor: 'rgba(240, 240, 240, 0.8)',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
@@ -90,8 +89,6 @@ const styles = StyleSheet.create({
   suggestionListContainer: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    // backgroundColor: '#fff',
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
   },
   suggestionList: {
     position: 'absolute',
