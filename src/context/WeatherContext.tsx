@@ -96,6 +96,7 @@ export const WeatherProvider = ({children}: {children: ReactNode}) => {
   const removeFavoriteCity = (city: string) => {
     setFavoriteCities(favoriteCities.filter(favCity => favCity !== city));
   };
+  
 
   return (
     <WeatherContext.Provider

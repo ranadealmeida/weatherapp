@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -12,25 +12,21 @@ import { getWeatherIcon } from '../utils/weatherIcons';
 
 const SevenDayWeatherCard: React.FC<{ weatherData: any }> = ({ weatherData }) => {
   const { favoriteCities, addFavoriteCity, removeFavoriteCity } = useWeather();
-  const [isFavorited, setIsFavorited] = useState(false);
-
-  useEffect(() => {
-    setIsFavorited(favoriteCities.includes(weatherData.location.name));
-  }, [favoriteCities, weatherData.location.name]);
+  const isFavorited = favoriteCities.includes(weatherData.location.name);
 
   if (!weatherData) {
     return <Text>Loading weather...</Text>;
   }
 
+
   const handleToggleFavorite = () => {
     if (isFavorited) {
       removeFavoriteCity(weatherData.location.name);
-      setIsFavorited(false);
     } else {
       addFavoriteCity(weatherData.location.name);
-      setIsFavorited(true);
     }
   };
+  
 
   return (
     <View style={styles.card}>
