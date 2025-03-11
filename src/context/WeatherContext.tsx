@@ -16,6 +16,7 @@ export const WeatherProvider = ({children}: {children: ReactNode}) => {
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [favoriteCities, setFavoriteCities] = useState<string[]>([]);
+  const [favoriteCitiesWeather, setFavoriteCitiesWeather] = useState<WeatherData[]>([]);
 
   useEffect(() => {
     if (!selectedCity) return;
@@ -89,6 +90,15 @@ export const WeatherProvider = ({children}: {children: ReactNode}) => {
     saveFavoriteCities();
   }, [favoriteCities]);
 
+  useEffect(() => {
+    const fetchFavoriteCitiesWeather = async () => {
+      const data = await Promise.all(favoriteCities.map(city => getWeather(city)));
+      setFavoriteCitiesWeather(data);
+    };
+
+    fetchFavoriteCitiesWeather();
+  }, [favoriteCities]);
+
   const addFavoriteCity = (city: string) => {
     setFavoriteCities([...favoriteCities, city]);
   };
@@ -105,6 +115,7 @@ export const WeatherProvider = ({children}: {children: ReactNode}) => {
         weatherData,
         setSelectedCity,
         favoriteCities,
+        favoriteCitiesWeather,
         addFavoriteCity,
         removeFavoriteCity,
       }}>
