@@ -99,6 +99,6 @@ export const getWeatherIcon = (conditionCode, size) => {
     case 1282: // Moderate or heavy snow with thunder
       return <Icon name="weather-lightning" size={size} color="#FF4500" />;
     default:
-      return <Icon name="weather-sunny" size={size} color="#FFD700" />;
+      return <Icon name="weather-cloudy-clock" size={size} color="#FFD700" />;
   }
 };
