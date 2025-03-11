@@ -9,44 +9,20 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from 'react-native';
-import Config from 'react-native-config';
 import { useWeather } from '../context/WeatherContext';
-import { getCitySuggestions } from '../api/getCitySuggestions'; // Import the fetchCities function
-
-const API_KEY = Config.API_KEY;
 
 const SearchBarComponent = ({
   onCitySelect,
 }: {
   onCitySelect: (city: string) => void;
 }) => {
-  const { setSelectedCity } = useWeather();
-  const [query, setQuery] = useState<string>('');
-  const [suggestions, setSuggestions] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  const handleSearch = async (text: string) => {
-    setQuery(text);
-    if (text.length < 3) {
-      setSuggestions([]);
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const cities = await getCitySuggestions(text, API_KEY);
-      setSuggestions(cities);
-    } catch (error) {
-      console.error('Error fetching city suggestions:', error);
-    }
-    setLoading(false);
-  };
-
-  const handleCitySelect = (city: string) => {
-    setQuery(city);
-    setSuggestions([]);
-    setSelectedCity(city);
-  };
+  const {     
+    query,
+    setQuery,
+    suggestions,
+    loading,
+    handleSearch,
+    handleCitySelect, } = useWeather();
 
   return (
     <View style={styles.suggestionListContainer}>

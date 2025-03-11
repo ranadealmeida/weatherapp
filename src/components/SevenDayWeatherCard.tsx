@@ -66,10 +66,10 @@ const SevenDayWeatherCard: React.FC<{ weatherData: any }> = ({ weatherData }) =>
             </Text>
             {getWeatherIcon(day.day.condition.code, 30)}
             <Text style={styles.forecastTemp}>{`H: ${Math.round(
-              weatherData.forecast.forecastday[0].day.maxtemp_c,
+              day.day.maxtemp_c,
             )}°C`}</Text>
             <Text style={styles.forecastTemp}>{`L: ${Math.round(
-              weatherData.forecast.forecastday[0].day.mintemp_c,
+              day.day.mintemp_c,
             )}°C`}</Text>
           </View>
         ))}
