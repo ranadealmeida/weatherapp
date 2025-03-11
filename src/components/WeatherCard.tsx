@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useWeather } from '../context/WeatherContext';
@@ -12,7 +12,6 @@ const WeatherCard: React.FC<{ weatherData: any }> = ({ weatherData }) => {
     if (!weatherData) {
       return <Text>Loading weather...</Text>;
     }
-  
   
     const handleToggleFavorite = () => {
       if (isFavorited) {

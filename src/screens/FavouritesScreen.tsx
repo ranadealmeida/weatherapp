@@ -1,30 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {View, Text, ScrollView, StyleSheet, SafeAreaView} from 'react-native';
 import {useWeather} from '../context/WeatherContext';
 import WeatherCard from '../components/WeatherCard';
-import {getWeather} from '../api/getWeather';
 
 const FavouritesScreen: React.FC = () => {
-  const {favoriteCities} = useWeather();
-  const [weatherDataList, setWeatherDataList] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchWeatherData = async () => {
-      const data = await Promise.all(
-        favoriteCities.map(city => getWeather(city)),
-      );
-      setWeatherDataList(data);
-    };
-
-    fetchWeatherData();
-  }, [favoriteCities]);
+  const { favoriteCitiesWeather } = useWeather();
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Favourite Cities</Text>
       <SafeAreaView>
         <ScrollView>
-          {weatherDataList.map(weatherData => (
+          {favoriteCitiesWeather.map(weatherData => (
             <WeatherCard
               key={weatherData.location.name}
               weatherData={weatherData}
