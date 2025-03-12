@@ -56,87 +56,55 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  useEffect(() => {
-    fetchWeather(); // Initial fetch
-  }, [selectedCity]);
-
-  useEffect(() => {
-    if (!selectedCity) return;
-
-    const interval = setInterval(fetchWeather, 900000);
-
-    return () => clearInterval(interval);
-  }, [selectedCity]);
-
-  useEffect(() => {
-    const loadLastSearchedCity = async () => {
-      try {
-        const storedCity = await AsyncStorage.getItem('lastSearchedCity');
-        if (storedCity) {
-          setSelectedCity(storedCity);
-        }
-      } catch (error) {
-        console.error('Failed to load last searched city:', error);
+  const saveLastSearchedCity = async () => {
+    try {
+      if (selectedCity) {
+        await AsyncStorage.setItem('lastSearchedCity', selectedCity);
       }
-    };
+    } catch (error) {
+      console.error('Failed to save last searched city:', error);
+    }
+  };
 
-    loadLastSearchedCity();
-  }, []);
+  const fetchFavoriteCitiesWeather = async () => {
+    const data = await Promise.all(favoriteCities.map(city => getWeather(city)));
+    setFavoriteCitiesWeather(data);
+  };
 
-  useEffect(() => {
-    const saveLastSearchedCity = async () => {
-      try {
-        if (selectedCity) {
-          await AsyncStorage.setItem('lastSearchedCity', selectedCity);
-        }
-      } catch (error) {
-        console.error('Failed to save last searched city:', error);
+  const saveFavoriteCities = async () => {
+    try {
+      await AsyncStorage.setItem(
+        'favoriteCities',
+        JSON.stringify(favoriteCities),
+      );
+    } catch (error) {
+      console.error('Failed to save favorite cities:', error);
+    }
+  };
+
+  const loadLastSearchedCity = async () => {
+    try {
+      const storedCity = await AsyncStorage.getItem('lastSearchedCity');
+      if (storedCity) {
+        setSelectedCity(storedCity);
       }
-    };
+    } catch (error) {
+      console.error('Failed to load last searched city:', error);
+    }
+  };
 
-    saveLastSearchedCity();
-  }, [selectedCity]);
-
-  useEffect(() => {
-    const loadFavoriteCities = async () => {
-      try {
-        const storedFavoriteCities = await AsyncStorage.getItem(
-          'favoriteCities',
-        );
-        if (storedFavoriteCities) {
-          setFavoriteCities(JSON.parse(storedFavoriteCities));
-        }
-      } catch (error) {
-        console.error('Failed to load favorite cities:', error);
+  const loadFavoriteCities = async () => {
+    try {
+      const storedFavoriteCities = await AsyncStorage.getItem(
+        'favoriteCities',
+      );
+      if (storedFavoriteCities) {
+        setFavoriteCities(JSON.parse(storedFavoriteCities));
       }
-    };
-
-    loadFavoriteCities();
-  }, []);
-
-  useEffect(() => {
-    const saveFavoriteCities = async () => {
-      try {
-        await AsyncStorage.setItem(
-          'favoriteCities',
-          JSON.stringify(favoriteCities),
-        );
-      } catch (error) {
-        console.error('Failed to save favorite cities:', error);
-      }
-    };
-
-    saveFavoriteCities();
-  }, [favoriteCities]);
-
-  useEffect(() => {
-    const fetchFavoriteCitiesWeather = async () => {
-      const data = await Promise.all(favoriteCities.map(city => getWeather(city)));
-      setFavoriteCitiesWeather(data);
-    };
-
-    fetchFavoriteCitiesWeather();
-  }, [favoriteCities]);
+    } catch (error) {
+      console.error('Failed to load favorite cities:', error);
+    }
+  };
 
   const addFavoriteCity = (city: string) => {
     setFavoriteCities([...favoriteCities, city]);
@@ -146,6 +114,25 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
     setFavoriteCities(favoriteCities.filter(favCity => favCity !== city));
   };
 
+  useEffect(() => {
+    loadLastSearchedCity();
+    loadFavoriteCities();
+  }, []);
+
+  useEffect(() => {
+    if (!selectedCity) return;
+
+    fetchWeather();
+    saveLastSearchedCity();
+    const interval = setInterval(fetchWeather, 900000);
+
+    return () => clearInterval(interval);
+  }, [selectedCity]);
+
+  useEffect(() => {
+    fetchFavoriteCitiesWeather();
+    saveFavoriteCities();
+  }, [favoriteCities]);
 
   return (
     <WeatherContext.Provider
