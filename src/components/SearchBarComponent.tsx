@@ -41,7 +41,7 @@ const SearchBarComponent = ({
               style={styles.suggestionItem}
               onPress={() => handleCitySelect(item.name)}>
               <Text>
-                {item.name}, {item.region}, {item.country}
+                {`${item.name},`} {item.region && `${item.region},`} {item.country}
               </Text>
             </TouchableOpacity>
           ))}
