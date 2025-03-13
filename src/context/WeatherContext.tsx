@@ -40,11 +40,9 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const handleCitySelect = (city: string) => {
-    setQuery(city);
     setSuggestions([]);
     setSelectedCity(city);
-    //In case we wanted to empty the text input after the user selected a city from suggestions list
-    //setQuery('');
+    setQuery('');
   };
 
   const fetchWeather = async () => {

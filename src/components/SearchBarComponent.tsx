@@ -29,6 +29,7 @@ const SearchBarComponent = ({
       <TextInput
         style={styles.searchInput}
         placeholder="Search city..."
+        placeholderTextColor="#000"
         onChangeText={handleSearch}
         value={query}
       />
