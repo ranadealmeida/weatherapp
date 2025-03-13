@@ -18,7 +18,7 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 const HomeScreen = () => {
   const { weatherData, setSelectedCity } = useWeather();
   const navigation = useNavigation();
-  
+
   const onSwipeLeft = () => {
     navigation.navigate('Favourites');
   };
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   overlay: {
-    paddingTop: 60,
+    paddingTop: 65,
     backgroundColor: 'rgba(255, 255, 255  , 0.4)',
   },
   container: {
