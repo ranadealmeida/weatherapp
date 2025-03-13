@@ -13,71 +13,58 @@ import { useWeather } from '../context/WeatherContext';
 import { getWeatherBackground } from '../utils/weatherBackground';
 import { BlurView } from '@react-native-community/blur';
 import { View } from 'react-native';
-import { GestureDetector, Gesture } from 'react-native-gesture-handler';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring, runOnJS } from 'react-native-reanimated';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 const HomeScreen = () => {
-  const { selectedCity, weatherData, setSelectedCity } = useWeather();
+  const { weatherData, setSelectedCity } = useWeather();
   const navigation = useNavigation();
-  const translateX = useSharedValue(0);
+  
+  const onSwipeLeft = () => {
+    navigation.navigate('Favourites');
+  };
 
-  const panGesture = Gesture.Pan()
-    .onUpdate((event) => {
-      translateX.value = event.translationX;
-    })
-    .onEnd((event) => {
-      if (event.translationX < -50) { // Swipe left threshold
-        runOnJS(navigation.navigate)('Favourites');
-      }
-      translateX.value = withSpring(0); // Reset position
-    });
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateX: translateX.value }],
-    };
-  });
   return (
-    <GestureDetector gesture={panGesture}>
-      <Animated.View style={[styles.box, animatedStyle]}>
-        <ImageBackground
-          source={
-            weatherData
-              ? getWeatherBackground(weatherData.current.condition.code)
-              : require('../assets/default-background.jpg')
-          }
-          style={styles.backgroundImage}>
-          <ScrollView style={styles.overlay} >
-            <SearchBarComponent onCitySelect={setSelectedCity} />
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('Favourites')}>
-              <Text style={styles.buttonText}>Go to Favourites</Text>
-            </TouchableOpacity>
-            <ScrollView contentContainerStyle={styles.container}>
-              {weatherData ? (
-                <View>
-                  <BlurView
-                    style={styles.blurContainer}
-                    blurAmount={3}
-                    blurType="light"
-                  >
-                  </BlurView>
-                  <SevenDayWeatherCard weatherData={weatherData} />
-                </View>
-              ) : (
-                <Text style={styles.errorText}>No weather data available.</Text>
-              )}
-            </ScrollView>
+    <GestureRecognizer
+      onSwipeLeft={onSwipeLeft}
+      style={styles.gestureContainer}
+    >
+      <ImageBackground
+        source={
+          weatherData
+            ? getWeatherBackground(weatherData.current.condition.code)
+            : require('../assets/default-background.jpg')
+        }
+        style={styles.backgroundImage}>
+        <ScrollView style={styles.overlay} >
+          <SearchBarComponent onCitySelect={setSelectedCity} />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('Favourites')}>
+            <Text style={styles.buttonText}>Go to Favourites</Text>
+          </TouchableOpacity>
+          <ScrollView contentContainerStyle={styles.container}>
+            {weatherData ? (
+              <View>
+                <BlurView
+                  style={styles.blurContainer}
+                  blurAmount={3}
+                  blurType="light"
+                >
+                </BlurView>
+                <SevenDayWeatherCard weatherData={weatherData} />
+              </View>
+            ) : (
+              <Text style={styles.errorText}>No weather data available.</Text>
+            )}
           </ScrollView>
-        </ImageBackground>
-      </Animated.View>
-    </GestureDetector>
+        </ScrollView>
+      </ImageBackground>
+    </GestureRecognizer>
   );
 };
 
 const styles = StyleSheet.create({
-  box: {
+  gestureContainer: {
     flex: 1,
   },
   blurContainer: {
