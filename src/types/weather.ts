@@ -37,7 +37,9 @@ export interface WeatherContextType {
   setQuery: (query: string) => void;
   suggestions: any[];
   setSuggestions: (suggestions: any[]) => void;
-  loading: boolean;
+  loadingSuggestions: boolean;
+  loadingWeather: boolean;
+  loadingFavorites: boolean;
   handleSearch: (query: string) => void;
   handleCitySelect: (city: string) => void;
 }

@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 const FavouritesScreen: React.FC = () => {
-  const { favoriteCitiesWeather, loading } = useWeather();
+  const { favoriteCitiesWeather, loadingFavorites } = useWeather();
   const navigation = useNavigation();
   
   const onSwipeRight = () => {
@@ -20,7 +20,7 @@ const FavouritesScreen: React.FC = () => {
       <View style={styles.container}>
         <Text style={styles.title}>Favourite Cities</Text>
         <ScrollView>
-          {loading ? (
+          {loadingFavorites ? (
             <ActivityIndicator size="large" color="#0000ff" />
           ) : (
             favoriteCitiesWeather.map((weatherData: any) => (

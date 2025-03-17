@@ -17,13 +17,13 @@ import { View } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 const HomeScreen = () => {
-  const { weatherData, setSelectedCity, loading } = useWeather();
+  const { weatherData, setSelectedCity, loadingWeather } = useWeather();
   const navigation = useNavigation();
 
   const onSwipeLeft = () => {
     navigation.navigate('Favourites');
   };
-
+  
   return (
     <GestureRecognizer
       onSwipeLeft={onSwipeLeft}
@@ -44,7 +44,7 @@ const HomeScreen = () => {
             <Text style={styles.buttonText}>Go to Favourites</Text>
           </TouchableOpacity>
           <ScrollView contentContainerStyle={styles.container}>
-            {loading ? (
+            {loadingWeather ? (
               <ActivityIndicator size="large" color="#0000ff" />
             ) : weatherData ? (
               <View>
