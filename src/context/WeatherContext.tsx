@@ -7,8 +7,7 @@ import React, {
 } from 'react';
 import Config from 'react-native-config';
 import { getWeather, getSevenDaysWeather } from '../api/getWeather';
-import { WeatherData } from '../types/weather';
-import { WeatherContextType } from '../types/weather-context';
+import { WeatherData, WeatherContextType } from '../types/weather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getCitySuggestions } from '../api/getCitySuggestions';
 const WeatherContext = createContext<WeatherContextType | undefined>(undefined);
@@ -47,6 +46,7 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchWeather = async () => {
     if (!selectedCity) return;
+    setLoading(true);
     try {
       const data = await getSevenDaysWeather(selectedCity);
       setWeatherData(data);
@@ -54,6 +54,7 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       console.error("Error fetching weather data:", error);
     }
+    setLoading(false);
   };
 
   const saveLastSearchedCity = async () => {
@@ -67,8 +68,14 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const fetchFavoriteCitiesWeather = async () => {
-    const data = await Promise.all(favoriteCities.map(city => getWeather(city)));
+    setLoading(true);
+    try {
+      const data = await Promise.all(favoriteCities.map(city => getWeather(city)));
     setFavoriteCitiesWeather(data);
+    } catch (error) {
+      console.error('Error fetching favorite cities weather:', error);
+    }
+    setLoading(false);
   };
 
   const saveFavoriteCities = async () => {

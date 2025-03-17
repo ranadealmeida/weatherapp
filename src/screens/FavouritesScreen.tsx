@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
 import { useWeather } from '../context/WeatherContext';
 import WeatherCard from '../components/WeatherCard';
 import { useNavigation } from '@react-navigation/native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 const FavouritesScreen: React.FC = () => {
-  const { favoriteCitiesWeather } = useWeather();
+  const { favoriteCitiesWeather, loading } = useWeather();
   const navigation = useNavigation();
   
   const onSwipeRight = () => {
@@ -20,12 +20,16 @@ const FavouritesScreen: React.FC = () => {
       <View style={styles.container}>
         <Text style={styles.title}>Favourite Cities</Text>
         <ScrollView>
-          {favoriteCitiesWeather.map(weatherData => (
-            <WeatherCard
-              key={weatherData.location.name}
-              weatherData={weatherData}
-            />
-          ))}
+          {loading ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : (
+            favoriteCitiesWeather.map((weatherData: any) => (
+              <WeatherCard
+                key={weatherData.location.name}
+                weatherData={weatherData}
+              />
+            ))
+          )}
         </ScrollView>
       </View>
     </GestureRecognizer>
