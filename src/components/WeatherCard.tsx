@@ -4,8 +4,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useWeather } from '../context/WeatherContext';
 import { getWeatherIcon } from '../utils/weatherIcons';
 import { getWeatherBackground } from '../utils/weatherBackground';
+import { WeatherData } from '../types/weather';
 
-const WeatherCard: React.FC<{ weatherData: any }> = ({ weatherData }) => {
+const WeatherCard: React.FC<{ weatherData: WeatherData }> = ({ weatherData }) => {
   const { favoriteCities, addFavoriteCity, removeFavoriteCity } = useWeather();
     const isFavorited = favoriteCities.includes(weatherData.location.name);
   
