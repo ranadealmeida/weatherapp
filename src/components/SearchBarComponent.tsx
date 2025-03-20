@@ -20,7 +20,7 @@ const SearchBarComponent = ({
     query,
     setQuery,
     suggestions,
-    loading,
+    loadingSuggestions,
     handleSearch,
     handleCitySelect, } = useWeather();
 
@@ -35,7 +35,7 @@ const SearchBarComponent = ({
       />
       {suggestions.length > 0 && (
         <ScrollView style={styles.suggestionList}>
-          {loading && <ActivityIndicator size="small" color="#0000ff" />}
+          {loadingSuggestions && <ActivityIndicator size="small" color="#0000ff" />}
           {suggestions.map(item => (
             <TouchableOpacity
               key={item.id.toString()}

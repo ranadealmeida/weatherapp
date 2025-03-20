@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  ActivityIndicator
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import SearchBarComponent from '../components/SearchBarComponent';
@@ -16,13 +17,13 @@ import { View } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 const HomeScreen = () => {
-  const { weatherData, setSelectedCity } = useWeather();
+  const { weatherData, setSelectedCity, loadingWeather } = useWeather();
   const navigation = useNavigation();
 
   const onSwipeLeft = () => {
     navigation.navigate('Favourites');
   };
-
+  
   return (
     <GestureRecognizer
       onSwipeLeft={onSwipeLeft}
@@ -43,7 +44,9 @@ const HomeScreen = () => {
             <Text style={styles.buttonText}>Go to Favourites</Text>
           </TouchableOpacity>
           <ScrollView contentContainerStyle={styles.container}>
-            {weatherData ? (
+            {loadingWeather ? (
+              <ActivityIndicator size="large" color="#0000ff" />
+            ) : weatherData ? (
               <View>
                 <BlurView
                   style={styles.blurContainer}
