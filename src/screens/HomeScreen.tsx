@@ -1,10 +1,12 @@
 import React from 'react';
 import {
+  View,
   ScrollView,
   Text,
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  Image,
   ActivityIndicator
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -13,7 +15,6 @@ import SevenDayWeatherCard from '../components/SevenDayWeatherCard';
 import { useWeather } from '../context/WeatherContext';
 import { getWeatherBackground } from '../utils/weatherBackground';
 import { BlurView } from '@react-native-community/blur';
-import { View } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 const HomeScreen = () => {
@@ -23,7 +24,7 @@ const HomeScreen = () => {
   const onSwipeLeft = () => {
     navigation.navigate('Favourites');
   };
-  
+
   return (
     <GestureRecognizer
       onSwipeLeft={onSwipeLeft}
@@ -36,14 +37,15 @@ const HomeScreen = () => {
             : require('../assets/default-background.jpg')
         }
         style={styles.backgroundImage}>
-        <ScrollView style={styles.overlay} >
+        <ScrollView contentContainerStyle={styles.overlay} >
           <SearchBarComponent onCitySelect={setSelectedCity} />
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate('Favourites')}>
             <Text style={styles.buttonText}>Go to Favourites</Text>
           </TouchableOpacity>
-          <ScrollView contentContainerStyle={styles.container}>
+
+          <View style={styles.container}>
             {loadingWeather ? (
               <ActivityIndicator size="large" color="#0000ff" />
             ) : weatherData ? (
@@ -55,11 +57,20 @@ const HomeScreen = () => {
                 >
                 </BlurView>
                 <SevenDayWeatherCard weatherData={weatherData} />
+                <TouchableOpacity
+                  style={styles.weatherButton}
+                  onPress={() => navigation.navigate('WebViewScreen')}>
+                  <Image
+                    source={require('../assets/weatherchannellogo.png')}
+                    style={styles.weatherIcon}
+                  />
+                </TouchableOpacity>
               </View>
+
             ) : (
               <Text style={styles.errorText}>No weather data available.</Text>
             )}
-          </ScrollView>
+          </View>
         </ScrollView>
       </ImageBackground>
     </GestureRecognizer>
@@ -88,6 +99,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   overlay: {
+    flexGrow: 1,
     paddingTop: 65,
     backgroundColor: 'rgba(255, 255, 255  , 0.4)',
   },
@@ -116,6 +128,16 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  weatherButton: {
+    alignSelf: 'center',
+    marginVertical: 15,
+    backgroundColor: '#ffffff',
+  },
+  weatherIcon: {
+    width: 70,
+    height: 70,
+    resizeMode: 'contain',
   },
 });
 
