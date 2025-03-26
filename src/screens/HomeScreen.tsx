@@ -14,11 +14,32 @@ import { useWeather } from '../context/WeatherContext';
 import { getWeatherBackground } from '../utils/weatherBackground';
 import { BlurView } from '@react-native-community/blur';
 import { View } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../App';
+
 import GestureRecognizer from 'react-native-swipe-gestures';
+
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 const HomeScreen = () => {
   const { weatherData, setSelectedCity, loadingWeather } = useWeather();
-  const navigation = useNavigation();
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+
+  const openInternalWebView = () => {
+    navigation.navigate('WebView', { 
+      url: 'webpages/internal.html',
+      isInternal: true,
+      title: 'App Documentation' 
+    });
+  };
+
+  const openExternalWebView = () => {
+    navigation.navigate('WebView', { 
+      url: 'https://www.weatherapi.com/docs/',
+      isInternal: false,
+      title: 'Weather API Docs' 
+    });
+  };
 
   const onSwipeLeft = () => {
     navigation.navigate('Favourites');
@@ -60,6 +81,16 @@ const HomeScreen = () => {
               <Text style={styles.errorText}>No weather data available.</Text>
             )}
           </ScrollView>
+          <TouchableOpacity
+              style={styles.button}
+              onPress={openInternalWebView}>
+              <Text style={styles.buttonText}>Docs</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+              style={[styles.button, {marginTop: 20}]}
+              onPress={openExternalWebView}>
+              <Text style={styles.buttonText}>API Docs</Text>
+          </TouchableOpacity>
         </ScrollView>
       </ImageBackground>
     </GestureRecognizer>
@@ -67,6 +98,17 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    marginBottom: 10,
+  },
+  smallButton: {
+    flex: 1,
+    marginHorizontal: 5,
+    paddingVertical: 8,
+  },
   gestureContainer: {
     flex: 1,
   },

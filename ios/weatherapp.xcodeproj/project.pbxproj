@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -41,6 +41,10 @@
 		A6785B802D8D88B900284F45 /* weatherapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = weatherapp.entitlements; path = weatherapp/weatherapp.entitlements; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		A6D339772D94398200FB7275 /* webpages */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = webpages; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
@@ -86,6 +90,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A6D339772D94398200FB7275 /* webpages */,
 				13B07FAE1A68108700A75B9A /* weatherapp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
@@ -133,6 +138,9 @@
 				A6785B812D8D89C000284F45 /* PBXBuildRule */,
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A6D339772D94398200FB7275 /* webpages */,
 			);
 			name = weatherapp;
 			productName = weatherapp;
