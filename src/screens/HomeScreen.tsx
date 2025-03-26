@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
-  ActivityIndicator
+  ActivityIndicator, 
+  Button
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import SearchBarComponent from '../components/SearchBarComponent';
@@ -65,6 +66,7 @@ const HomeScreen = () => {
                     style={styles.weatherIcon}
                   />
                 </TouchableOpacity>
+                <Button onPress={() => navigation.navigate('WebViewInteractive')} title="Go to Website Documentation" />
               </View>
 
             ) : (
@@ -135,8 +137,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   weatherIcon: {
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
     resizeMode: 'contain',
   },
 });
