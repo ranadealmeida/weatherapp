@@ -8,15 +8,44 @@ import { WeatherProvider } from './src/context/WeatherContext';
 import WebViewInteractive from './src/screens/WebViewInteractive';
 
 const Stack = createNativeStackNavigator();
+
+const linking = {
+  prefixes: ['https://weatherapp.com', 'weatherapp://'],
+  config: {
+    screens: {
+      Home: '',
+      Favourites: 'favourites',
+      WeatherWebView: 'weatherchannel',
+      WebViewInteractive: 'interactive',
+    },
+  },
+};
+
 const App = () => {
   return (
     <WeatherProvider>
-      <NavigationContainer>
+      <NavigationContainer linking={linking}>
         <Stack.Navigator>
-          <Stack.Screen name="Home" options={{ headerShown: false }} component={HomeScreen} />
-          <Stack.Screen name="Favourites" options={{ headerTitle: '' }} component={FavouritesScreen} />
-          <Stack.Screen name="WebViewScreen" options={{ headerTitle: '' }} component={WeatherWebView} />
-          <Stack.Screen name="WebViewInteractive" options={{ headerTitle: '' }} component={WebViewInteractive} />
+          <Stack.Screen
+            name="Home"
+            options={{ headerShown: false }}
+            component={HomeScreen}
+          />
+          <Stack.Screen
+            name="Favourites"
+            options={{ headerTitle: '' }}
+            component={FavouritesScreen}
+          />
+          <Stack.Screen
+            name="WeatherWebView"
+            options={{ headerTitle: '' }}
+            component={WeatherWebView}
+          />
+          <Stack.Screen
+            name="WebViewInteractive"
+            options={{ headerTitle: '' }}
+            component={WebViewInteractive}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </WeatherProvider>

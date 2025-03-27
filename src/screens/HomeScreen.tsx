@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
-  ActivityIndicator, 
-  Button
+  ActivityIndicator,
+  Button,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import SearchBarComponent from '../components/SearchBarComponent';
@@ -29,8 +29,7 @@ const HomeScreen = () => {
   return (
     <GestureRecognizer
       onSwipeLeft={onSwipeLeft}
-      style={styles.gestureContainer}
-    >
+      style={styles.gestureContainer}>
       <ImageBackground
         source={
           weatherData
@@ -38,7 +37,7 @@ const HomeScreen = () => {
             : require('../assets/default-background.jpg')
         }
         style={styles.backgroundImage}>
-        <ScrollView contentContainerStyle={styles.overlay} >
+        <ScrollView contentContainerStyle={styles.overlay}>
           <SearchBarComponent onCitySelect={setSelectedCity} />
           <TouchableOpacity
             style={styles.button}
@@ -51,24 +50,21 @@ const HomeScreen = () => {
               <ActivityIndicator size="large" color="#0000ff" />
             ) : weatherData ? (
               <View>
-                <BlurView
-                  style={styles.blurContainer}
-                  blurAmount={3}
-                  blurType="light"
-                >
-                </BlurView>
                 <SevenDayWeatherCard weatherData={weatherData} />
                 <TouchableOpacity
                   style={styles.weatherButton}
-                  onPress={() => navigation.navigate('WebViewScreen')}>
+                  onPress={() => navigation.navigate('WeatherWebView')}>
                   <Image
                     source={require('../assets/weatherchannellogo.png')}
                     style={styles.weatherIcon}
                   />
                 </TouchableOpacity>
-                <Button onPress={() => navigation.navigate('WebViewInteractive')} title="Go to Website Documentation" />
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => navigation.navigate('WebViewInteractive')}>
+                  <Text style={styles.buttonText}>Go to Internal Webview</Text>
+                </TouchableOpacity>
               </View>
-
             ) : (
               <Text style={styles.errorText}>No weather data available.</Text>
             )}
@@ -82,19 +78,6 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   gestureContainer: {
     flex: 1,
-  },
-  blurContainer: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    borderRadius: 20,
-    padding: 20,
-    marginBottom: 20,
-    borderColor: 'rgba(234, 234, 234, 0.1)',
-    borderWidth: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   backgroundImage: {
     flex: 1,
