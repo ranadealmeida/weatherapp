@@ -10,6 +10,7 @@ const WebViewInteractive = () => {
   return (
     <View style={styles.container}>
       <WebView
+        webviewDebuggingEnabled={true}
         source={{
           html: `
                     <html>
@@ -48,6 +49,7 @@ const WebViewInteractive = () => {
                             <h1>Welcome to the internal webview :)</h1>
                             <button onClick="sendMessage()">Click me!</button>
                             <script>
+                            console.log('Hello debugger!');
                                 function sendMessage() {
                                     window.ReactNativeWebView.postMessage('Hahah nice it works!');
                                 }

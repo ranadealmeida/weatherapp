@@ -8,14 +8,12 @@ import {
   ImageBackground,
   Image,
   ActivityIndicator,
-  Button,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import SearchBarComponent from '../components/SearchBarComponent';
 import SevenDayWeatherCard from '../components/SevenDayWeatherCard';
 import { useWeather } from '../context/WeatherContext';
 import { getWeatherBackground } from '../utils/weatherBackground';
-import { BlurView } from '@react-native-community/blur';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 const HomeScreen = () => {
